@@ -1,6 +1,6 @@
 # GitHub Action to Sync S3 Bucket 🔄
 
-This simple action uses the [vanilla AWS CLI](https://docs.aws.amazon.com/cli/index.html) to upload a file to a remote S3 bucket.
+This simple action uses the [vanilla AWS CLI](https://docs.aws.amazon.com/cli/index.html) to upload a file **to** a remote S3 bucket.
 
 
 ## Usage
@@ -8,15 +8,6 @@ This simple action uses the [vanilla AWS CLI](https://docs.aws.amazon.com/cli/in
 ### `workflow.yml` Example
 
 Place in a `.yml` file such as this one in your `.github/workflows` folder. [Refer to the documentation on workflow YAML syntax here.](https://help.github.com/en/articles/workflow-syntax-for-github-actions)
-
-As of v0.3.0, all [`aws s3 sync` flags](https://docs.aws.amazon.com/cli/latest/reference/s3/sync.html) are optional to allow for maximum customizability (that's a word, I promise) and must be provided by you via `args:`.
-
-#### The following example includes optimal defaults for a public static website:
-
-- `--acl public-read` makes your files publicly readable (make sure your [bucket settings are also set to public](https://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteAccessPermissionsReqd.html)).
-- `--follow-symlinks` won't hurt and fixes some weird symbolic link problems that may come up.
-- Most importantly, `--delete` **permanently deletes** files in the S3 bucket that are **not** present in the latest version of your repository/build.
-- **Optional tip:** If you're uploading the root of your repository, adding `--exclude '.git/*'` prevents your `.git` folder from syncing, which would expose your source code history if your project is closed-source. (To exclude more than one pattern, you must have one `--exclude` flag per exclusion. The single quotes are also important!)
 
 ```yaml
 name: Upload Website
